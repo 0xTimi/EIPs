@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: CC0-1.0
+// Copyright (c) 2022 ysqi
 pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 /**
  * @title ERC-5635 Licensing Token Standard.
  * @dev See https://eips.ethereum.org/EIPS/eip-5635
- * Note: The ERC-165 identifier for this interface is 0x8cd02adc.
+ * Note: The ERC-165 identifier for this interface is 0x345d6502.
  */
 
-interface IERC5635 {
+interface IERC5635 is IERC1155 {
     /// @dev The licensing argeement meta data.
     struct Licensing {
         uint256 oNFTId;
@@ -26,19 +29,15 @@ interface IERC5635 {
     }
 
     /**
-     * @dev Safely transfers one `tokenId` token from `from` to `to`.
-     * see https://eips.ethereum.org/EIPS/eip-721
-     * https://eips.ethereum.org/EIPS/eip-1155
-     */
-    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
-
-    /**
      * @dev Retruns the licensing argeement meta data.
      *
      * MUST revert if `tokenId` not found.
      * @param tokenId ID of the licensing token.
      */
-    function licenseInfo(uint256 tokenId) external view returns (Licensing memory);
+    function licenseInfo(uint256 tokenId)
+        external
+        view
+        returns (Licensing memory);
 
     /// @notice Called with the sale price to determine how much royalty
     //          is owed and to whom.
